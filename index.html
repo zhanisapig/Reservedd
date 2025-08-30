@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚖 預約叫車表單</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f9f9f9;margin:0;padding:0;}
+.container{max-width:500px;margin:30px auto;background:#fff;padding:25px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.1);}
+h2{text-align:center;color:#333;}
+label{display:block;margin-top:15px;color:#555;font-weight:500;}
+input,textarea{width:100%;padding:12px;margin-top:5px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;font-size:16px;}
+textarea{resize:vertical;}
+button{width:100%;padding:15px;margin-top:20px;font-size:18px;border:none;border-radius:8px;cursor:pointer;}
+#generateBtn{background:#4CAF50;color:white;}
+#generateBtn:hover{background:#45a049;}
+#resultBox{display:none;margin-top:20px;padding:15px;background-color:#eef9f3;border-left:5px solid #4CAF50;border-radius:8px;}
+#resultText{width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;font-size:16px;margin-top:10px;resize:none;}
+.actionBtn{margin-top:10px;color:white;padding:12px;border:none;border-radius:6px;font-size:16px;cursor:pointer;width:100%;}
+#copyBtn{background:#2196F3;}
+#copyBtn:hover{background:#1976D2;}
+#lineBtn{background:#00B900;}
+#lineBtn:hover{background:#009900;}
+#callBtn1,#callBtn2{background:#FF9800;}
+#callBtn1:hover,#callBtn2:hover{background:#e68a00;}
+.callInfo{margin-top:15px;color:#333;font-weight:500;text-align:center;}
+@media(max-width:600px){.container{margin:15px;padding:20px;}}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>🚖 預約叫車表單</h2>
+
+<form id="taxiForm">
+<label>電話（可填可不填）</label>
+<input type="tel" name="phone" placeholder="請輸入電話">
+<label>上車地點（可填可不填）</label>
+<input type="text" name="pickup" placeholder="請輸入上車地點">
+<label>目的地（可填可不填）</label>
+<input type="text" name="destination" placeholder="請輸入目的地">
+<label>備註（可填可不填）</label>
+<textarea name="note" rows="3" placeholder="可輸入特殊需求或備註"></textarea>
+<label>預約日期</label>
+<input type="date" name="date">
+<label>預約時間</label>
+<input type="time" name="time">
+<button type="submit" id="generateBtn">📄 生成預約訊息</button>
+</form>
+
+<div class="callInfo">
+<p>如須電話服務，請直接撥打：</p>
+<button id="callBtn1" class="actionBtn">📞 0977-269-504</button>
+<button id="callBtn2" class="actionBtn">📞 0908-232-851</button>
+</div>
+
+<div id="resultBox">
+<h3>✅ 預約訊息生成完成</h3>
+<textarea id="resultText" rows="10" readonly></textarea>
+<button id="copyBtn" class="actionBtn">📋 複製文字到剪貼簿</button>
+<button id="lineBtn" class="actionBtn">💬 聯絡官方 LINE</button>
+</div>
+</div>
+
+<script>
+const form = document.getElementById('taxiForm');
+const resultBox = document.getElementById('resultBox');
+const resultText = document.getElementById('resultText');
+const copyBtn = document.getElementById('copyBtn');
+const lineBtn = document.getElementById('lineBtn');
+const callBtn1 = document.getElementById('callBtn1');
+const callBtn2 = document.getElementById('callBtn2');
+
+form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+
+    const phone = form.phone.value || "未填";
+    const pickup = form.pickup.value || "未填";
+    const destination = form.destination.value || "未填";
+    const note = form.note.value || "未填";
+    const date = form.date.value || "未填";
+    const time = form.time.value || "未填";
+
+    const message = `📢 新預約叫車訊息
+電話：${phone}
+上車地點：${pickup}
+目的地：${destination}
+備註：${note}
+預約日期：${date}
+預約時間：${time}`;
+
+    resultText.value = message;
+    resultBox.style.display = 'block';
+    resultText.scrollIntoView({behavior:"smooth"});
+});
+
+copyBtn.addEventListener('click', ()=>{
+    resultText.select();
+    document.execCommand('copy');
+    alert("✅ 已複製到剪貼簿，直接貼到 LINE 上即可！");
+});
+
+lineBtn.addEventListener('click', ()=>{
+    window.open("https://line.me/R/ti/p/@429hdnhy", "_blank");
+});
+
+callBtn1.addEventListener('click', ()=>{
+    window.location.href = "tel:0977269504";
+});
+
+callBtn2.addEventListener('click', ()=>{
+    window.location.href = "tel:0908232851";
+});
+</script>
+</body>
+</html>
